@@ -40,18 +40,27 @@ const getParsedResult = async (textContent, options) => {
   return result;
 };
 
-const parse = async function (htmlString: string, options?: ParseOptions, callback?: (result: ParseResult) => void): Promise<ParseResult> {
+const parse = async function (htmlString: string, options?: ParseOptions, callback?: (err: Error, result: ParseResult) => void): Promise<ParseResult> {
   if (typeof htmlString !== 'string') {
     throw new Error('Invalid html string parameter');
   }
 
   options = options ? { ...defaultOptions, ...options } : defaultOptions;
+  let result;
 
-  const textContent = getTextContent(htmlString);
-  const result = await getParsedResult(textContent, options);
+  try {
+    const textContent = getTextContent(htmlString);
+    result = await getParsedResult(textContent, options);
 
-  if (callback) {
-    callback(result);
+    if (callback) {
+      callback(null, result);
+    }
+  } catch (e) {
+    if (callback) {
+      callback(e, result);
+    } else {
+      throw e;
+    }
   }
 
   return result;

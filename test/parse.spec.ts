@@ -19,6 +19,17 @@ describe('Main module', () => {
     });
   });
 
+  it('Should return error in callback', (done) => {
+    const text = `Text to parse.`;
+    const callback = (err, result) => {
+      expect(err).to.be.instanceOf(Error);
+
+      done();
+    };
+
+    parse(text, { parsers: ['UNDEFINED_PARSER'] }, callback);
+  });
+
   it('Multiple parsers result', async () => {
     const text = `Text with hashtags #tag1 #tag2 #Tag1 #tag2.`;
     const result = await parse(text, { parsers: ['KEYWORDS', 'TAGS']});
@@ -37,7 +48,7 @@ describe('Main module', () => {
 
   it('If callback was provided it should be called with result', (done) => {
     const text = `Text to parse.`;
-    const callback = (result) => {
+    const callback = (err, result) => {
       expect(result).eql({
         text: 1,
         to: 1,

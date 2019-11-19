@@ -58,11 +58,12 @@ describe('Keywords Parser', () => {
     });
 
     it('Apostrophes', async () => {
-      const text = `I don't wanna think 'bout it, 'cause ... boes'`;
+      const text = `I don't wanna think 'bout it, 'cause ...`;
       const result = await parser.parse(text);
 
       return expect(result).eql({
         i: 1,
+        '\'bout': 1,
         don: 1,
         '\'t': 1,
         wanna: 1,
