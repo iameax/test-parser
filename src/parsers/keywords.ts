@@ -9,17 +9,19 @@ export default class KeywordsParser extends BaseParser {
   }
 
   makeWords(text: string, minWordLength?: number, exclusions?: Array<string>) {
-    let words = text.match(/\b(\w+)\b/g);
+    let words = text.match(/\b([\w]+)\b/gm);
 
     if (!words) {
       return [];
     }
 
+    words = words.map(word => word.toLocaleLowerCase());
     if (minWordLength) {
       words = words.filter(word => word.length >= minWordLength);
     }
 
     if (exclusions) {
+      exclusions = exclusions.map(exl => exl.toLocaleLowerCase());
       words = words.filter(word => !exclusions.includes(word));
     }
 

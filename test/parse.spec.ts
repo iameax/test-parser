@@ -25,12 +25,11 @@ describe('Main module', () => {
 
     return expect(result).eql({
       KEYWORDS: {
-        Text: 1,
+        text: 1,
         with: 1,
         hashtags: 1,
-        tag1: 1,
+        tag1: 2,
         tag2: 2,
-        Tag1: 1,
       },
       TAGS: ['tag1', 'tag2', 'Tag1']
     });
@@ -40,7 +39,7 @@ describe('Main module', () => {
     const text = `Text to parse.`;
     const callback = (result) => {
       expect(result).eql({
-        Text: 1,
+        text: 1,
         to: 1,
         parse: 1,
       });

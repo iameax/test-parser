@@ -1,4 +1,5 @@
 import { expect, assert } from 'chai';
+import parse from '../../src';
 import KeywordsParser from '../../src/parsers/keywords';
 import 'mocha';
 import { getTextContent } from '../../src/utils';
@@ -13,13 +14,13 @@ describe('Keywords Parser', () => {
       const ignoredWords = ['dolor', 'amet', 'Lorem'];
       const result = await parser.parse(text, { ignoreWords: ignoredWords });
 
-      expect(result).not.contain.any.keys(['dolor', 'amet', 'Lorem']);
+      expect(result).not.contain.any.keys(['dolor', 'amet', 'lorem']);
     });
 
     it('maxTextLength: Should limit the text to options.maxTextLength characters', async () => {
       const result = await parser.parse(text, { maxTextLength: 60 });
       const expected = {
-        Lorem: 1,
+        lorem: 1,
         ipsum: 1,
         dolor: 1,
         sit: 1,
@@ -35,7 +36,7 @@ describe('Keywords Parser', () => {
     it('minWordLength: Should ignore words with length less than options.minWordLength', async () => {
       const result = await parser.parse(text, { minWordLength: 3 });
       const expected = {
-        Lorem: 1,
+        lorem: 1,
         adipiscing: 1,
         aliqua: 1,
         amet: 2,
@@ -54,6 +55,22 @@ describe('Keywords Parser', () => {
       };
 
       expect(result).eql(expected);
+    });
+
+    // Пока не ясно, как должен вести себя парсер с апострофами
+    it('Пример из тех задания', async () => {
+      const text = `About John... If John goes home in monday at 10pm, I'll be happy!`;
+      const result = await parser.parse(text, { ignoreWords: ['if', 'in', 'at', 'be', '\'ll'], minWordLength: 2 });
+
+      return expect(result).eql({
+        about: 1,
+        john: 2,
+        monday: 1,
+        goes: 1,
+        home: 1,
+        '10pm': 1,
+        happy: 1,
+      });
     });
   });
 });
