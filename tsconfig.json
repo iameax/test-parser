@@ -1,0 +1,17 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "removeComments": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": false,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
