@@ -57,7 +57,21 @@ describe('Keywords Parser', () => {
       expect(result).eql(expected);
     });
 
-    // Пока не ясно, как должен вести себя парсер с апострофами
+    it('Apostrophes', async () => {
+      const text = `I don't wanna think 'bout it, 'cause ... boes'`;
+      const result = await parser.parse(text);
+
+      return expect(result).eql({
+        i: 1,
+        don: 1,
+        '\'t': 1,
+        wanna: 1,
+        think: 1,
+        it: 1,
+        '\'cause': 1,
+      });
+    });
+
     it('Пример из тех задания', async () => {
       const text = `About John... If John goes home in monday at 10pm, I'll be happy!`;
       const result = await parser.parse(text, { ignoreWords: ['if', 'in', 'at', 'be', '\'ll'], minWordLength: 2 });

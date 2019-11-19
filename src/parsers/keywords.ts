@@ -9,7 +9,7 @@ export default class KeywordsParser extends BaseParser {
   }
 
   makeWords(text: string, minWordLength?: number, exclusions?: Array<string>) {
-    let words = text.match(/\b([\w]+)\b/gm);
+    let words = text.match(/('?\b[\w]+\b)/gm);
 
     if (!words) {
       return [];
